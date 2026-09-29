@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12110e">
+  <meta name="description" content="Forge Mobile is a local-first phone workspace with chat, files, and a sandboxed live preview.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Forge">
+  <title>Forge Mobile</title>
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <a class="skip" href="#composer-input">Skip to composer</a>
+  <div id="app" class="app is-booting">
+    <header class="topbar">
+      <div class="brand">
+        <span class="mark" aria-hidden="true">F</span>
+        <div>
+          <p class="kicker">Forge Mobile</p>
+          <h1 id="project-name">hello-preview</h1>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span id="storage-pill" class="pill" title="On-device storage">storage</span>
+        <button id="persist-btn" class="ghost" type="button">Keep files</button>
+      </div>
+    </header>
+    <section class="stage">
+      <section data-pane="chat" class="pane pane-chat" aria-label="Chat">
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <form id="composer" class="composer">
+          <label class="sr-only" for="composer-input">Message</label>
+          <textarea id="composer-input" rows="2" placeholder="Note or /help" autocomplete="off"></textarea>
+          <button type="submit" class="send">Send</button>
+        </form>
+      </section>
+      <section data-pane="files" class="pane pane-files" hidden aria-label="Files">
+        <aside class="file-rail">
+          <div class="rail-head">
+            <strong id="file-count">0 files</strong>
+            <button id="new-file" type="button">New</button>
+          </div>
+          <div id="file-list" class="file-list"></div>
+          <div class="rail-foot">
+            <button id="export-backup" type="button">Export</button>
+            <button id="import-backup" type="button">Import</button>
+            <input id="import-input" type="file" accept="application/json,.json" hidden>
+          </div>
+        </aside>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <input id="editor-path" aria-label="File path" spellcheck="false">
+            <span id="editor-meta" class="muted">No file</span>
+            <button id="save-file" type="button">Save</button>
+            <button id="delete-file" class="danger" type="button">Delete</button>
+          </div>
+          <label class="sr-only" for="editor">File contents</label>
+          <textarea id="editor" spellcheck="false"></textarea>
+        </div>
+      </section>
+      <section data-pane="preview" class="pane pane-preview" hidden aria-label="Preview">
+        <div class="preview-toolbar">
+          <label class="sr-only" for="preview-entry">Preview file</label>
+          <select id="preview-entry"></select>
+          <span id="preview-label" class="muted">index.html</span>
+          <button id="preview-run" type="button">Run</button>
+          <button id="preview-reload" type="button">Reload</button>
+        </div>
+        <iframe id="preview-frame" title="Live preview" sandbox="allow-scripts allow-forms"></iframe>
+      </section>
+    </section>
+    <nav class="dock" aria-label="Primary">
+      <button data-pane-btn="chat" class="is-active" type="button" aria-selected="true">Chat</button>
+      <button data-pane-btn="files" type="button" aria-selected="false">Files</button>
+      <button data-pane-btn="preview" type="button" aria-selected="false">Preview</button>
+    </nav>
+  </div>
+  <p id="boot-error" class="boot-error" hidden></p>
+  <div id="toast" class="toast" hidden role="status"></div>
+  <footer class="legal"><span id="year"></span> · Files stay on this device · naija-devkit is a separate repo</footer>
+  <script type="module" src="./js/boot.js"></script>
+</body>
+</html>
