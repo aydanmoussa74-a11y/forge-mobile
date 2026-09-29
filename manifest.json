@@ -1,0 +1,21 @@
+{
+  "name": "Forge Mobile",
+  "short_name": "Forge",
+  "description": "Local-first mobile agent workspace with files and live preview.",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12110e",
+  "theme_color": "#12110e",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

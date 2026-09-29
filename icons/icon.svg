@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Forge Mobile">
+  <rect width="512" height="512" rx="96" fill="#1c1a16"/>
+  <rect x="36" y="36" width="440" height="440" rx="72" fill="#12110e" stroke="#d4a056" stroke-width="14"/>
+  <path d="M168 338 V174 h48 l72 112 V174 h48 v164 h-48 l-72-112 v112z" fill="#e8e0d4"/>
+  <rect x="168" y="358" width="176" height="18" rx="4" fill="#d4a056"/>
+</svg>
