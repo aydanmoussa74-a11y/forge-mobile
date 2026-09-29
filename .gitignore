@@ -1,0 +1,12 @@
+.DS_Store
+*.log
+.env
+.env.*
+!.env.example
+node_modules/
+.idea/
+.vscode/
+dist/
+*.local
+.wrangler/
+dev.vars
