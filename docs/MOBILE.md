@@ -17,9 +17,11 @@ https://aydanmoussa74-a11y.github.io/forge-mobile/
 - [ ] Files pane opens `index.html`
 - [ ] Save edits and reload — text is still there
 - [ ] Preview renders the seed page
-- [ ] Preview "Tap me" updates text (sandbox scripts work)
-- [ ] `/ls` lists files
-- [ ] `create demo.html that says hello from Lagos` creates a file
+- [ ] Preview "Tap me" updates text
+- [ ] Term `ls` lists files
+- [ ] Chat `create demo.html that says hello from Lagos` creates a file
+- [ ] Chat `build a tap counter page` writes html/css/js and opens proof
+- [ ] Model settings save shows last4 only, never the full key
 - [ ] Export downloads JSON
 - [ ] Import restores files
 - [ ] Airplane mode still shows the shell and saved files

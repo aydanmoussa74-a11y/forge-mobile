@@ -11,23 +11,25 @@ Phone-first local workspace. GitHub is the source of truth for this repo. The PW
 
 ## Layout
 
-- `index.html` — chat-first PWA shell
-- `js/db.js` — IndexedDB
+- `index.html` — workshop floor (desk, case, proof, galley)
+- `js/commands.js` — command parser
+- `js/tools.js` — tool bus
+- `js/planner.js` / `js/loop.js` / `js/model.js` — agent loop
 - `js/fs.js` — project file tools
 - `js/preview.js` — sandboxed HTML preview
-- `js/chat.js` — thread + command parser
-- `js/app.js` — milestone 0-2 orchestration
+- `js/sandbox.js` — 3s JS worker
+- `tests/run.mjs` — planner / parser / redact seams
 
 ## Rules
 
 - Do not put API keys, tokens, or `.env` values in files
+- Model key stays in IndexedDB; UI shows last4 only
 - Working branch for later agent work: `forge/<slug>`
 - Never force-push `main`
-- One coherent slice per turn
 - Family-safe product surface
 
 ## Current milestone
 
-Shipped: 0 repo oxygen, 1 chat + project record, 2 filesystem + live preview.
+Shipped: 0–4 (shell, chat+files+preview, tool bus + virtual terminal, planner + optional model).
 
-Next: tool bus + virtual terminal, then model adapter, then free web fetch worker.
+Next: free web fetch worker (DuckDuckGo / Wikipedia proxy) if asked.

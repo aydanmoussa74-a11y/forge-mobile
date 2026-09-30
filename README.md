@@ -1,50 +1,61 @@
 # Forge Mobile
 
-Local-first AI agent workspace that runs as a phone PWA. This repository is the product. Files you create in the app stay on the device until you export them.
+Local-first AI agent workspace that runs as a phone PWA. This repository is the product. Files you create in the app stay on the device until you export them or later connect GitHub from inside the app.
 
-`naija-devkit` is a separate repo and was not modified.
+`naija-devkit` is a separate repo and is not modified here.
 
 ## Live app
 
 https://aydanmoussa74-a11y.github.io/forge-mobile/
 
-If that 404s, open the repo on GitHub mobile → Settings → Pages:
+If that 404s, enable GitHub Pages on this repo: Settings → Pages → Deploy from GitHub Actions. Then wait a minute.
 
-1. Source: Deploy from a branch
-2. Branch: `main` / root
-3. Save, wait about a minute, refresh
+## What works now (Milestones 0–4)
 
-Or source: GitHub Actions (the `pages` workflow is already in the repo).
-
-## What works now (Milestones 0–2)
-
-- Installable PWA shell
-- Chat thread persisted in IndexedDB
+- Installable PWA workshop (desk / case / proof / galley)
+- Chat tickets persisted in IndexedDB
 - On-device project filesystem
+- Virtual terminal: `ls`, `cat`, `write`, `edit`, `rm`, `js`, `preview`, `help`
+- Deterministic planner for multi-file jobs (poster, counter, site)
+- Optional OpenAI-compatible model key stored on-device (last4 only in UI)
 - Sandboxed live HTML preview
 - Export / import JSON backup
 - Seed project `hello-preview`
 
-Not in this slice: model calls, paid search APIs, a real Linux terminal.
+Not in this slice: paid search APIs, virtual Linux, writing naija-devkit.
 
-## Phone use
+## Use on a phone
 
-1. Open the live URL in Chrome
-2. Install from the browser menu
-3. Chat holds notes and commands
-4. Files edits the local project
-5. Preview runs `index.html`
+1. Open the live URL
+2. Install the app from the browser menu
+3. Desk holds jobs and tool tickets
+4. Case edits the local project
+5. Proof runs `index.html`
+6. Galley is the virtual terminal
 
-Commands:
+Useful commands:
 
 ```text
-/help
-/ls
-/open index.html
-/preview
-/new notes.txt hello
+help
+ls
+cat index.html
+write notes.txt hello
+edit notes.txt hello => hello from Lagos
+preview
+js app.js
 create demo.html that says hello from Lagos
+build a tap counter page
 ```
+
+## Tests
+
+```text
+node tests/run.mjs
+```
+
+## Why this stack
+
+No laptop and no Termux means no build pipeline. The app is static ES modules so GitHub Pages can host it and Chrome on Android can install it.
 
 ## License
 

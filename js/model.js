@@ -1,4 +1,5 @@
 import { get, now, put } from "./db.js";
+import { redactSecrets } from "./redact.js";
 
 const META_KEY = "model_settings";
 const SECRET_KEY = "model_key";
@@ -50,6 +51,7 @@ export async function completeChat({ messages }) {
     error.code = "model_missing";
     throw error;
   }
+
   const url = `${settings.baseUrl}/chat/completions`;
   const response = await fetch(url, {
     method: "POST",
@@ -57,11 +59,16 @@ export async function completeChat({ messages }) {
       "content-type": "application/json",
       authorization: `Bearer ${secret.value}`
     },
-    body: JSON.stringify({ model: settings.model, temperature: 0.2, messages })
+    body: JSON.stringify({
+      model: settings.model,
+      temperature: 0.2,
+      messages
+    })
   });
+
   if (!response.ok) {
-    const body = await response.text();
-    throw new Error(`Model HTTP ${response.status}: ${body.slice(0, 180)}`);
+    const body = redactSecrets(await response.text());
+    throw new Error(`Model HTTP ${response.status}: ${body.slice(0, 160)}`);
   }
   const json = await response.json();
   const text = json.choices && json.choices[0] && json.choices[0].message
