@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#12110e">
-  <meta name="description" content="Forge Mobile is a local-first phone workspace with chat, files, and a sandboxed live preview.">
+  <meta name="theme-color" content="#1a1209">
+  <meta name="description" content="Forge Mobile — phone workshop with a local filesystem, virtual terminal, and agent loop.">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="Forge">
   <title>Forge Mobile</title>
@@ -12,32 +12,38 @@
   <link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
   <a class="skip" href="#composer-input">Skip to composer</a>
   <div id="app" class="app is-booting">
-    <header class="topbar">
-      <div class="brand">
-        <span class="mark" aria-hidden="true">F</span>
-        <div>
-          <p class="kicker">Forge Mobile</p>
-          <h1 id="project-name">hello-preview</h1>
-        </div>
+    <header class="mast">
+      <div class="mast-type">
+        <p class="press">Lagos workshop press</p>
+        <h1 class="wordmark">Forge <em>Mobile</em></h1>
+        <p id="project-name" class="job">hello-preview</p>
       </div>
-      <div class="top-actions">
-        <span id="storage-pill" class="pill" title="On-device storage">storage</span>
-        <button id="persist-btn" class="ghost" type="button">Keep files</button>
+      <div class="mast-meta">
+        <span id="model-stamp" class="stamp">PLANNER</span>
+        <span id="storage-pill" class="rule-stat">disk</span>
+        <button id="settings-btn" type="button">Model</button>
       </div>
     </header>
     <section class="stage">
       <section data-pane="chat" class="pane pane-chat" aria-label="Chat">
         <div id="messages" class="messages" aria-live="polite"></div>
+        <div id="tool-sheet" class="receipt" hidden></div>
+        <div class="chips" role="group" aria-label="Shortcuts">
+          <button type="button" data-chip="/ls">ls</button>
+          <button type="button" data-chip="/preview">preview</button>
+          <button type="button" data-chip="create poster.html that says hello from Lagos">poster</button>
+          <button type="button" data-chip="build a tap counter page">counter</button>
+        </div>
         <form id="composer" class="composer">
           <label class="sr-only" for="composer-input">Message</label>
-          <textarea id="composer-input" rows="2" placeholder="Note or /help" autocomplete="off"></textarea>
-          <button type="submit" class="send">Send</button>
+          <textarea id="composer-input" rows="2" placeholder="Build a page, or type ls / cat / write / js / preview" autocomplete="off"></textarea>
+          <button type="submit" class="send">Run</button>
         </form>
       </section>
       <section data-pane="files" class="pane pane-files" hidden aria-label="Files">
@@ -50,6 +56,7 @@
           <div class="rail-foot">
             <button id="export-backup" type="button">Export</button>
             <button id="import-backup" type="button">Import</button>
+            <button id="persist-btn" type="button">Keep</button>
             <input id="import-input" type="file" accept="application/json,.json" hidden>
           </div>
         </aside>
@@ -64,6 +71,18 @@
           <textarea id="editor" spellcheck="false"></textarea>
         </div>
       </section>
+      <section data-pane="term" class="pane pane-term" hidden aria-label="Terminal">
+        <div class="term-head">
+          <span>virtual terminal</span>
+          <span class="muted">no Linux · js sandbox 3s</span>
+        </div>
+        <pre id="term-log" class="term-log" aria-live="polite"></pre>
+        <form id="term-form" class="term-form">
+          <label class="sr-only" for="term-input">Command</label>
+          <span class="prompt" aria-hidden="true">forge></span>
+          <input id="term-input" spellcheck="false" autocomplete="off" placeholder="ls  ·  cat index.html  ·  js app.js  ·  preview">
+        </form>
+      </section>
       <section data-pane="preview" class="pane pane-preview" hidden aria-label="Preview">
         <div class="preview-toolbar">
           <label class="sr-only" for="preview-entry">Preview file</label>
@@ -72,18 +91,42 @@
           <button id="preview-run" type="button">Run</button>
           <button id="preview-reload" type="button">Reload</button>
         </div>
-        <iframe id="preview-frame" title="Live preview" sandbox="allow-scripts allow-forms"></iframe>
+        <div class="frame">
+          <iframe id="preview-frame" title="Live preview" sandbox="allow-scripts allow-forms"></iframe>
+        </div>
       </section>
     </section>
     <nav class="dock" aria-label="Primary">
-      <button data-pane-btn="chat" class="is-active" type="button" aria-selected="true">Chat</button>
-      <button data-pane-btn="files" type="button" aria-selected="false">Files</button>
-      <button data-pane-btn="preview" type="button" aria-selected="false">Preview</button>
+      <button data-pane-btn="chat" class="is-active" type="button" aria-selected="true"><em>01</em> Chat</button>
+      <button data-pane-btn="files" type="button" aria-selected="false"><em>02</em> Files</button>
+      <button data-pane-btn="term" type="button" aria-selected="false"><em>03</em> Term</button>
+      <button data-pane-btn="preview" type="button" aria-selected="false"><em>04</em> Preview</button>
     </nav>
   </div>
+  <dialog id="settings" class="sheet">
+    <form id="settings-form" method="dialog">
+      <header>
+        <h2>Optional model</h2>
+        <p>Planner works with no key. A free OpenAI-compatible endpoint is optional.</p>
+      </header>
+      <label>Base URL
+        <input id="model-url" placeholder="https://api.groq.com/openai/v1" spellcheck="false">
+      </label>
+      <label>Model
+        <input id="model-name" placeholder="llama-3.1-8b-instant" spellcheck="false">
+      </label>
+      <label>Key
+        <input id="model-key" type="password" autocomplete="off" placeholder="shown as last 4 after save">
+      </label>
+      <p id="model-last4" class="muted">No key stored.</p>
+      <menu>
+        <button id="model-clear" type="button" class="danger">Clear key</button>
+        <button id="model-save" value="save">Save</button>
+      </menu>
+    </form>
+  </dialog>
   <p id="boot-error" class="boot-error" hidden></p>
   <div id="toast" class="toast" hidden role="status"></div>
-  <footer class="legal"><span id="year"></span> · Files stay on this device · naija-devkit is a separate repo</footer>
   <script type="module" src="./js/boot.js"></script>
 </body>
 </html>
