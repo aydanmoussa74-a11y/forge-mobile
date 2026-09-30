@@ -11,6 +11,7 @@ const SHELL = [
   "./js/chat.js",
   "./js/ui.js",
   "./js/app.js",
+  "./js/seed.js",
   "./js/sandbox.js",
   "./js/memory.js",
   "./js/tools.js",
@@ -41,7 +42,6 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
-
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)
