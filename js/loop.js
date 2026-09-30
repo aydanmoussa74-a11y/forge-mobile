@@ -16,7 +16,7 @@ export async function runTurn(text, ctx) {
       try {
         const reply = await completeChat({
           messages: [
-            { role: "system", content: SYSTEM_PROMPT + "\nReply with JSON {\"steps\":[{\"tool\",\"args\"}]} only when tools are needed." },
+            { role: "system", content: SYSTEM_PROMPT },
             { role: "user", content: `Files: ${(ctx.files || []).map((file) => file.path).join(", ") || "none"}\n\n${text}` }
           ]
         });
@@ -25,13 +25,18 @@ export async function runTurn(text, ctx) {
           steps = extracted.slice(0, MAX_STEPS);
           source = "model";
         } else {
-          return { source: "model", note: reply || "Model returned no tools.", results: [], filesChanged: [] };
+          return {
+            source: "model",
+            note: reply || "Model returned no tools.",
+            results: [],
+            filesChanged: []
+          };
         }
       } catch (error) {
         if (error.code !== "model_missing") {
           return {
             source: "planner",
-            note: `Model unavailable (${error.message}). Say /help or describe a page to build.`,
+            note: `Model unavailable (${error.message}). Say help or describe a page to build.`,
             results: [],
             filesChanged: []
           };
@@ -43,12 +48,13 @@ export async function runTurn(text, ctx) {
   const results = [];
   const filesChanged = [];
   for (const step of steps) {
-    ctx.onToolStart && ctx.onToolStart(step);
+    if (ctx.onToolStart) ctx.onToolStart(step);
     const result = await runTool(step.tool, step.args, ctx);
     results.push(result);
-    ctx.onToolDone && ctx.onToolDone(result);
+    if (ctx.onToolDone) ctx.onToolDone(result);
     if (result.path) filesChanged.push(result.path);
     if (result.files) filesChanged.push(...result.files);
+    if (!result.ok && step.tool === "write") break;
   }
 
   const uniqueFiles = [...new Set(filesChanged)];
@@ -63,7 +69,7 @@ export async function runTurn(text, ctx) {
   if (!results.length) {
     return {
       source,
-      note: "No tools ran. Try /help, /ls, or \u201ccreate about.html that says hello from Lagos\u201d.",
+      note: "No tools ran. Try help, ls, or \u201ccreate about.html that says hello from Lagos\u201d.",
       results,
       filesChanged: uniqueFiles
     };

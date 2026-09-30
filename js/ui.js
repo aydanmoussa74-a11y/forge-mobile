@@ -2,13 +2,17 @@ export const $ = (id) => document.getElementById(id);
 
 export function setPane(name) {
   document.querySelectorAll("[data-pane]").forEach((node) => {
-    node.hidden = node.dataset.pane !== name;
+    const active = node.dataset.pane === name;
+    node.hidden = !active;
+    node.classList.toggle("is-open", active);
   });
   document.querySelectorAll("[data-pane-btn]").forEach((btn) => {
     const active = btn.dataset.paneBtn === name;
     btn.setAttribute("aria-selected", String(active));
     btn.classList.toggle("is-active", active);
   });
+  const floor = document.getElementById("app");
+  if (floor) floor.dataset.pane = name;
 }
 
 export function toast(message, tone = "info") {
@@ -53,4 +57,13 @@ export function readFileInput(input) {
     reader.onerror = () => reject(reader.error || new Error("Read failed."));
     reader.readAsText(file);
   });
+}
+
+export function setBusy(busy) {
+  const app = $("app");
+  const send = $("send-btn");
+  const input = $("composer-input");
+  app.classList.toggle("is-busy", busy);
+  if (send) send.disabled = busy;
+  if (input) input.disabled = busy;
 }

@@ -1,4 +1,4 @@
-const VERSION = "forge-mobile-m4-v1";
+const VERSION = "forge-mobile-m4-v2";
 const SHELL = [
   "./",
   "./index.html",
@@ -14,6 +14,8 @@ const SHELL = [
   "./js/sandbox.js",
   "./js/memory.js",
   "./js/tools.js",
+  "./js/commands.js",
+  "./js/redact.js",
   "./js/planner.js",
   "./js/model.js",
   "./js/loop.js",
@@ -39,6 +41,7 @@ self.addEventListener("fetch", (event) => {
   if (request.method !== "GET") return;
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
+
   event.respondWith(
     caches.match(request).then((cached) => {
       const network = fetch(request)
