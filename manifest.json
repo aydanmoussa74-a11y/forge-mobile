@@ -1,14 +1,14 @@
 {
   "name": "Forge Mobile",
   "short_name": "Forge",
-  "description": "Local-first mobile agent workspace with files and live preview.",
+  "description": "On-device workshop: files, virtual terminal, planner, live proof.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#12110e",
-  "theme_color": "#12110e",
+  "background_color": "#100c08",
+  "theme_color": "#14100b",
   "lang": "en",
   "icons": [
     {
